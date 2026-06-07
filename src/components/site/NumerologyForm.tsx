@@ -10,18 +10,36 @@ export function NumerologyForm() {
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", dob: "" });
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.dob) {
       toast.error("Please fill all required fields");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setDone(true);
-      toast.success("Your numerology report is ready!");
-    }, 1800);
+
+    try {
+      await fetch("https://connect.pabbly.com/webhook-listener/webhook/IjU3NjMwNTZkMDYzNDA0MzE1MjY1NTUzYyI_3D_pc/IjU3NjcwNTY5MDYzNjA0MzQ1MjZiNTUzNDUxM2Ei_pc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          dob: form.dob,
+          source: "AstroFATE Numerology Report Form",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+    } catch (error) {
+      console.error("Webhook submission failed:", error);
+    }
+
+    setLoading(false);
+    setDone(true);
+    toast.success("Your numerology report is ready!");
   };
 
   return (
