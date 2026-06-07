@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import logoUrl from "../../../node_modules/lovable-tagger/node_modules/tailwindcss/lib/public/logo.png";
+import sanskarImg from "../../../node_modules/lovable-tagger/node_modules/tailwindcss/lib/public/Sanskar_image.jpg";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -531,15 +533,91 @@ export function FinalCTA() {
   );
 }
 
+// ---------- About Company & CEO ----------
+export function AboutCompany() {
+  return (
+    <section id="about" className="py-20 sm:py-28 relative overflow-hidden bg-cosmic">
+      {/* Background blobs */}
+      <div className="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-violet/10 blur-3xl" />
+      <div className="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHead eyebrow="About Us" title={<>Discover <span className="text-gradient-violet">AstroFATE</span></>} />
+        
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Company Details */}
+          <div className="lg:col-span-7 space-y-6">
+            <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight">
+              Bridging Cosmic Wisdom & Modern Innovation
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Founded under the parent brand <strong>AstroFATE</strong>, our mission is to make the profound depth of ancient astrology and numerology accessible, accurate, and deeply practical for the modern world. We believe that cosmic insights should not be vague generalizations, but personalized tools for self-discovery and empowerment.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              By blending classical Pythagorean algorithms with state-of-the-art AI systems, AstroFATE decodes the mathematical blueprints of your birth charts and names to generate reports that are both scientifically computed and intuitively resonant.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4 pt-4">
+              <div className="glass rounded-xl p-4">
+                <h4 className="font-semibold text-gold mb-1">Authentic Science</h4>
+                <p className="text-xs text-muted-foreground">Mathematical Pythagorean models validated across thousands of profiles.</p>
+              </div>
+              <div className="glass rounded-xl p-4">
+                <h4 className="font-semibold text-violet-soft mb-1">AI-Powered Depth</h4>
+                <p className="text-xs text-muted-foreground">Cognitive engines that translate charts into clear, actionable lifemaps.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* CEO Card */}
+          <div className="lg:col-span-5">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-violet to-gold blur-2xl opacity-20 group-hover:opacity-35 transition duration-500 rounded-3xl" />
+              <div className="relative glass-strong rounded-3xl p-6 sm:p-8 border border-border shadow-glow hover:border-violet-soft/30 transition-all duration-300">
+                <div className="flex flex-col items-center text-center">
+                  {/* CEO Image */}
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-violet to-gold rounded-2xl blur-md opacity-50 group-hover:opacity-85 transition" />
+                    <img 
+                      src={sanskarImg} 
+                      alt="Sanskar Girawale — CEO" 
+                      className="relative h-44 w-36 object-cover rounded-2xl border-2 border-gold/40 shadow-lg object-top"
+                    />
+                  </div>
+
+                  {/* CEO Details */}
+                  <h4 className="text-xl font-bold text-foreground">Sanskar Girawale</h4>
+                  <p className="text-xs text-gold font-medium uppercase tracking-wider mt-1">Founder & CEO, AstroFATE</p>
+                  
+                  {/* CEO Quote */}
+                  <div className="relative mt-6 pt-6 border-t border-border w-full">
+                    <Quote className="absolute top-2 left-0 h-6 w-6 text-gold/20 -translate-y-4" />
+                    <p className="text-sm italic text-muted-foreground leading-relaxed">
+                      "At AstroFATE, we believe that astrology and numerology are not about predicting a fixed destiny, but about unlocking your ultimate potential. By merging ancient wisdom with modern technology, we guide you to navigate life's currents with clarity and confidence."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ---------- Footer ----------
 export function Footer() {
   return (
     <footer className="border-t border-border py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-5 w-5 text-gold" />
-            <span className="font-semibold">Mystic <span className="text-gradient-gold">Numbers</span></span>
+          <div className="flex items-center mb-3">
+            <img
+              src={logoUrl}
+              alt="AstroPredict Logo"
+              className="h-20 w-auto object-contain -ml-2 logo-themed"
+            />
           </div>
           <p className="text-sm text-muted-foreground">Ancient wisdom, modern clarity. Personalized numerology for the curious soul.</p>
         </div>
@@ -559,7 +637,7 @@ export function Footer() {
         ))}
       </div>
       <div className="mt-10 border-t border-border pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-3 text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} Mystic Numbers. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} AstroPredict. All rights reserved.</p>
         <p>Made with ✨ for cosmic seekers worldwide.</p>
       </div>
     </footer>

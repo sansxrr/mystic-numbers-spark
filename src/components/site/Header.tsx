@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Sparkles, Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoUrl from "../../../node_modules/lovable-tagger/node_modules/tailwindcss/lib/public/logo.png";
 
 const links = [
   { href: "#how", label: "How it works" },
@@ -34,15 +35,16 @@ export function Header() {
         scrolled ? "glass-strong shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2 group">
-          <div className="relative">
-            <div className="absolute inset-0 bg-violet blur-md opacity-60 group-hover:opacity-100 transition-opacity" />
-            <Sparkles className="relative h-6 w-6 text-gold" />
+          <div className="relative flex items-center">
+            <div className="absolute inset-0 bg-white/5 blur-md opacity-60 group-hover:opacity-100 transition-opacity rounded-lg" />
+            <img
+              src={logoUrl}
+              alt="AstroPredict Logo"
+              className="relative h-16 w-auto object-contain logo-themed"
+            />
           </div>
-          <span className="font-semibold tracking-tight text-lg">
-            Mystic <span className="text-gradient-gold">Numbers</span>
-          </span>
         </a>
 
         <nav className="hidden lg:flex items-center gap-7">

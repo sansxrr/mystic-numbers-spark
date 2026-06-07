@@ -137,6 +137,17 @@
   border: 1px solid color-mix(in oklab, var(--violet-soft) 25%, transparent);
 }
 
+@utility logo-themed {
+  transition: filter 0.3s ease;
+  /* Colors the logo to violet and removes black background using SVG filter */
+  filter: url(#logo-to-violet);
+  
+  &:hover {
+    /* Colors the logo to gold on hover using SVG filter */
+    filter: url(#logo-to-gold);
+  }
+}
+
 @utility text-gradient-gold {
   background-image: linear-gradient(90deg, var(--gold), oklch(0.9 0.14 75));
   -webkit-background-clip: text;

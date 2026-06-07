@@ -107,6 +107,24 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }}>
+          <defs>
+            <filter id="logo-to-violet">
+              <feColorMatrix type="matrix" values="
+                0.55 0    0    0    0
+                0.36 0    0    0    0
+                0.96 0    0    0    0
+                1    0    0    0    0" />
+            </filter>
+            <filter id="logo-to-gold">
+              <feColorMatrix type="matrix" values="
+                0.98 0    0    0    0
+                0.75 0    0    0    0
+                0.14 0    0    0    0
+                1    0    0    0    0" />
+            </filter>
+          </defs>
+        </svg>
         <Scripts />
       </body>
     </html>

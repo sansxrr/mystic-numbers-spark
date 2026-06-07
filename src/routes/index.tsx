@@ -6,7 +6,7 @@ import { NumerologyForm } from "@/components/site/NumerologyForm";
 import {
   HowItWorks, CoreNumbers, LuckyInsights, Personality, Career,
   Compatibility, Daily, Forecast, Assistant, SampleReport,
-  Testimonials, FAQ, FinalCTA, Footer, StickyCTA,
+  AboutCompany, Testimonials, FAQ, FinalCTA, Footer, StickyCTA,
 } from "@/components/site/Sections";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { ExitIntent } from "@/components/site/ExitIntent";
@@ -14,9 +14,9 @@ import { ExitIntent } from "@/components/site/ExitIntent";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Mystic Numbers — Personalized Numerology Reports & Lucky Insights" },
+      { title: "AstroPredict — Personalized Numerology Reports & Lucky Insights" },
       { name: "description", content: "Discover your life path, lucky numbers, compatibility, and yearly forecast with personalized numerology reports powered by ancient wisdom and modern AI." },
-      { property: "og:title", content: "Mystic Numbers — Numerology, Reimagined" },
+      { property: "og:title", content: "AstroPredict — Numerology, Reimagined" },
       { property: "og:description", content: "Personalized numerology reports, compatibility checks, and AI guidance — beautifully designed." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        name: "Mystic Numbers",
+        name: "AstroPredict",
         description: "Personalized numerology reports, lucky insights, compatibility checks and yearly forecasts.",
         applicationCategory: "LifestyleApplication",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -60,6 +60,7 @@ function Index() {
         <Forecast />
         <Assistant />
         <SampleReport />
+        <AboutCompany />
         <Testimonials />
         <FAQ />
         <FinalCTA />
