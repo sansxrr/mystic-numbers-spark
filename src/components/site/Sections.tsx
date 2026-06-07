@@ -6,7 +6,7 @@ import {
   Sparkles, Lightbulb, MessageSquare, Smile, Flame, Users,
   ChevronDown, Send, Download, Share2, Quote,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import logoUrl from "../../../node_modules/lovable-tagger/node_modules/tailwindcss/lib/public/logo.png";
 import sanskarImg from "../../../node_modules/lovable-tagger/node_modules/tailwindcss/lib/public/Sanskar_image.jpg";
@@ -337,49 +337,151 @@ export function Forecast() {
   );
 }
 
+// ---------- AI Assistant Helper ----------
+function getBotResponse(query: string): string {
+  const q = query.toLowerCase();
+  
+  if (q.includes("ceo") || q.includes("sanskar") || q.includes("girawale") || q.includes("founder")) {
+    return "AstroFATE was founded by Sanskar Girawale. His vision is to bridge the gap between ancient cosmological wisdom and modern AI tools. As the CEO, Sanskar believes in using numerology as a roadmap to unlock ultimate human potential!";
+  }
+  
+  if (q.includes("astrofate") || q.includes("company") || q.includes("fate")) {
+    return "AstroFATE is the parent brand behind AstroPredict. We combine classical Pythagorean algorithms, Vedic astrology, and state-of-the-art AI systems to decode your birth charts and name energies, giving you highly precise and personalized life maps.";
+  }
+  
+  if (q.includes("life path") || q.includes("lifepath") || q.includes("path number")) {
+    if (q.includes("7")) {
+      return "Life Path 7 represents the 'Seeker of Truth'. You are analytical, intuitive, and spiritually oriented. Your journey is to find wisdom, examine details, and uncover the deeper mysteries of life.";
+    }
+    if (q.includes("3")) {
+      return "Life Path 3 represents 'The Creative Expresser'. You are highly expressive, communicative, and artistic. Your journey is to use your voice, imagination, and positive energy to inspire others.";
+    }
+    if (q.includes("5")) {
+      return "Life Path 5 represents 'The Freedom Seeker'. You thrive on adventure, change, and variety. Your journey is to embrace transformation, travel, and explore diverse perspectives.";
+    }
+    if (q.includes("1")) {
+      return "Life Path 1 represents 'The Pioneer'. You are independent, ambitious, and a natural leader. Your journey is to build self-confidence and initiate original pathways.";
+    }
+    if (q.includes("9")) {
+      return "Life Path 9 represents 'The Humanitarian'. You are compassionate, creative, and generous. Your journey is to offer wisdom, service, and understanding to the world.";
+    }
+    return "Your Life Path Number represents the core journey and lessons of your life. It is calculated by summing all the digits of your birth date. For example, if you are a Life Path 7, you are analytical and intuitive. Tell me your birth date, and I can calculate it for you!";
+  }
+  
+  if (q.includes("career") || q.includes("job") || q.includes("business") || q.includes("money") || q.includes("wealth")) {
+    return "In numerology, career alignment is key. For analytical paths (like 7), fields in Research, Technology, Writing, and Consulting are favored. For creative paths (like 3), Arts, Marketing, and Media work best. Solo ventures and innovative products under AstroFATE's guidance can unlock your maximum prosperity.";
+  }
+  
+  if (q.includes("lucky") || q.includes("color") || q.includes("gemstone") || q.includes("date") || q.includes("day")) {
+    return "Based on your charts: Thursday is your luckiest day for decisions. Royal Violet and Indigo colors align with high-frequency energy. Amethyst is your primary lucky gemstone to enhance intuition and clarity, and dates matching 7, 16, and 25 bring favorable opportunities.";
+  }
+  
+  if (q.includes("compatibility") || q.includes("love") || q.includes("relationship") || q.includes("match")) {
+    return "Compatibility is computed by matching Core Numbers. Generally, Life Path 7 aligns perfectly with Life Path 5 (which brings adventure) and Life Path 2 (which offers emotional depth and support). Use the 'Is it written in the stars?' checker above to calculate your exact percentage!";
+  }
+  
+  if (q.includes("hello") || q.includes("hi") || q.includes("hey") || q.includes("greet")) {
+    return "Hello! I am your AstroFATE AI Numerology Assistant. How can I help you today? Ask me about your life path, career, lucky colors, or compatibility!";
+  }
+  
+  return "That is a fascinating question! According to the cosmic coordinates of AstroFATE, your query is connected to your primary chart frequencies. Could you share your Full Name or Date of Birth so I can give you a more personalized numerological analysis?";
+}
+
 // ---------- AI Assistant ----------
 export function Assistant() {
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<{ sender: "bot" | "user"; text: string }[]>([
+    {
+      sender: "bot",
+      text: "Hi! I'm your AstroFATE AI assistant. Ask me about your life path, lucky dates, compatibility, or career guidance!",
+    },
+  ]);
+  const [loading, setLoading] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    const userText = input;
+    setInput("");
+    setMessages((prev) => [...prev, { sender: "user", text: userText }]);
+    setLoading(true);
+
+    setTimeout(() => {
+      const response = getBotResponse(userText);
+      setMessages((prev) => [...prev, { sender: "bot", text: response }]);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput("");
+    setMessages((prev) => [...prev, { sender: "user", text: suggestion }]);
+    setLoading(true);
+
+    setTimeout(() => {
+      const response = getBotResponse(suggestion);
+      setMessages((prev) => [...prev, { sender: "bot", text: response }]);
+      setLoading(false);
+    }, 1000);
+  };
+
   const suggestions = [
     "Which career suits me?",
     "Is my business name lucky?",
     "What does my life path number mean?",
     "Which date is lucky for launching a business?",
   ];
+
   return (
     <section id="assistant" className="py-20 sm:py-28">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHead eyebrow="AI numerology assistant" title={<>Ask the <span className="text-gradient-violet">numbers</span> anything</>} subtitle="Powered by ancient wisdom + modern AI." />
         <div className="glass-strong rounded-3xl p-6 sm:p-8 shadow-glow">
-          <div className="space-y-4 mb-6">
-            <div className="flex gap-3">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-violet to-violet-soft flex items-center justify-center flex-shrink-0">
-                <Sparkles className="h-4 w-4 text-white" />
+          <div ref={chatContainerRef} className="space-y-4 mb-6 max-h-[350px] overflow-y-auto pr-2 scrollbar-thin">
+            {messages.map((m, i) => (
+              <div key={i} className={`flex gap-3 ${m.sender === "user" ? "justify-end" : ""}`}>
+                {m.sender === "bot" && (
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-violet to-violet-soft flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-4 w-4 text-white" />
+                  </div>
+                )}
+                <div
+                  className={`${
+                    m.sender === "user"
+                      ? "bg-gradient-to-br from-violet to-violet-soft rounded-2xl rounded-tr-sm p-4 text-sm max-w-[80%] text-white"
+                      : "glass rounded-2xl rounded-tl-sm p-4 text-sm max-w-[80%]"
+                  }`}
+                >
+                  {m.text}
+                </div>
               </div>
-              <div className="glass rounded-2xl rounded-tl-sm p-4 text-sm max-w-md">
-                Hi! I'm your numerology AI. Ask me about your life path, lucky dates, or compatibility.
+            ))}
+            
+            {loading && (
+              <div className="flex gap-3">
+                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-violet to-violet-soft flex items-center justify-center flex-shrink-0 animate-spin-slow">
+                  <Sparkles className="h-4 w-4 text-white" />
+                </div>
+                <div className="glass rounded-2xl rounded-tl-sm p-4 text-sm max-w-[80%] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
               </div>
-            </div>
-            <div className="flex gap-3 justify-end">
-              <div className="bg-gradient-to-br from-violet to-violet-soft rounded-2xl rounded-tr-sm p-4 text-sm max-w-md text-white">
-                What does my life path number 7 mean?
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-violet to-violet-soft flex items-center justify-center flex-shrink-0">
-                <Sparkles className="h-4 w-4 text-white" />
-              </div>
-              <div className="glass rounded-2xl rounded-tl-sm p-4 text-sm max-w-md">
-                Life path 7 marks you as the seeker — deeply analytical, spiritual, and drawn to truth. Your gift is uncovering what others miss.
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4">
             {suggestions.map((s) => (
               <button
                 key={s}
-                onClick={() => setInput(s)}
+                onClick={() => handleSuggestionClick(s)}
                 className="text-xs glass rounded-full px-3 py-1.5 hover:bg-surface-2/60 transition"
               >
                 {s}
@@ -391,10 +493,20 @@ export function Assistant() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSend();
+                }
+              }}
               placeholder="Ask your question…"
               className="h-12 bg-input border-border"
+              disabled={loading}
             />
-            <Button className="h-12 px-5 bg-gradient-to-r from-violet to-violet-soft text-white">
+            <Button 
+              onClick={handleSend}
+              disabled={loading}
+              className="h-12 px-5 bg-gradient-to-r from-violet to-violet-soft text-white"
+            >
               <Send className="h-4 w-4" />
             </Button>
           </div>
