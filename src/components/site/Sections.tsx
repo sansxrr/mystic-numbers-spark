@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import logoUrl from "../../assets/logo.png";
+import sanskarImg from "../../assets/Sanskar_image.jpg";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -689,7 +691,7 @@ export function AboutCompany() {
                   <div className="relative mb-6">
                     <div className="absolute inset-0 bg-gradient-to-tr from-violet to-gold rounded-2xl blur-md opacity-50 group-hover:opacity-85 transition" />
                     <img 
-                      src="/Sanskar_image.jpg" 
+                      src={sanskarImg} 
                       alt="Sanskar Girawale — CEO" 
                       className="relative h-44 w-36 object-cover rounded-2xl border-2 border-gold/40 shadow-lg object-top"
                     />
@@ -724,7 +726,7 @@ export function Footer() {
         <div>
           <div className="flex items-center mb-3">
             <img
-              src="/logo.png"
+              src={logoUrl}
               alt="AstroPredict Logo"
               className="h-20 w-auto object-contain -ml-2 logo-themed"
             />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoUrl from "../../assets/logo.png";
 
 const links = [
   { href: "#how", label: "How it works" },
@@ -39,7 +40,7 @@ export function Header() {
           <div className="relative flex items-center">
             <div className="absolute inset-0 bg-white/5 blur-md opacity-60 group-hover:opacity-100 transition-opacity rounded-lg" />
             <img
-              src="/logo.png"
+              src={logoUrl}
               alt="AstroPredict Logo"
               className="relative h-16 w-auto object-contain logo-themed"
             />
