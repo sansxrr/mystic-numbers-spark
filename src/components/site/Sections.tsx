@@ -761,20 +761,33 @@ export function SampleReport() {
     dob: "1992-03-14",
     lifePath: 7,
     destiny: 3,
-    soulUrge: 9
+    soulUrge: 9,
+    sgpas: [8.65, 8.8, 9.1, 9.05, 9.3, 9.4, 9.25, 9.5],
+    cgpa: 9.15
   });
+
+  const generateRandomGpa = () => {
+    const steps = Math.floor(Math.random() * 37); // 0 to 36 (produces values from 8.00 to 9.80 in steps of 0.05)
+    return parseFloat((8.0 + steps * 0.05).toFixed(2));
+  };
 
   const loadReportData = () => {
     if (typeof window !== "undefined") {
       const storedName = localStorage.getItem("astrofate_user_name");
       const storedDob = localStorage.getItem("astrofate_user_dob");
       if (storedName && storedDob) {
+        const generatedSgpas = Array.from({ length: 8 }, () => generateRandomGpa());
+        const avg = generatedSgpas.reduce((a, b) => a + b, 0) / 8;
+        const generatedCgpa = parseFloat((Math.round(avg / 0.05) * 0.05).toFixed(2));
+
         setReportData({
           name: storedName,
           dob: storedDob,
           lifePath: calculateLifePath(storedDob),
           destiny: calculateDestiny(storedName),
-          soulUrge: calculateSoulUrge(storedName)
+          soulUrge: calculateSoulUrge(storedName),
+          sgpas: generatedSgpas,
+          cgpa: generatedCgpa
         });
       }
     }
@@ -805,6 +818,11 @@ export function SampleReport() {
   const reportItems = [
     { label: "Core Numbers", value: `Life Path ${reportData.lifePath} · Destiny ${reportData.destiny} · Soul Urge ${reportData.soulUrge}` },
     { label: "Lucky Insights", value: `${lpInfo.color} · ${lpInfo.day} · ${lpInfo.gem}` },
+    { 
+      label: "Academic Projection (Expected SGPA)", 
+      value: `Sem 1: ${reportData.sgpas[0].toFixed(2)}   |   Sem 2: ${reportData.sgpas[1].toFixed(2)}   |   Sem 3: ${reportData.sgpas[2].toFixed(2)}   |   Sem 4: ${reportData.sgpas[3].toFixed(2)}\nSem 5: ${reportData.sgpas[4].toFixed(2)}   |   Sem 6: ${reportData.sgpas[5].toFixed(2)}   |   Sem 7: ${reportData.sgpas[6].toFixed(2)}   |   Sem 8: ${reportData.sgpas[7].toFixed(2)}` 
+    },
+    { label: "Expected Final CGPA", value: `${reportData.cgpa.toFixed(2)} / 10.00` },
     { label: "Personality Blueprint", value: lpInfo.personality },
     { label: "Career & Prosperity", value: lpInfo.career },
     { label: "Relationships & Compatibility", value: lpInfo.compatibility },
@@ -832,6 +850,20 @@ LUCKY INSIGHTS:
 * Lucky Colors: ${lpInfo.color}
 * Lucky Day: ${lpInfo.day}
 * Lucky Gemstone: ${lpInfo.gem}
+
+--------------------------------------------------
+ACADEMIC PROJECTION:
+--------------------------------------------------
+* Expected SGPAs:
+  - Semester 1: ${reportData.sgpas[0].toFixed(2)}
+  - Semester 2: ${reportData.sgpas[1].toFixed(2)}
+  - Semester 3: ${reportData.sgpas[2].toFixed(2)}
+  - Semester 4: ${reportData.sgpas[3].toFixed(2)}
+  - Semester 5: ${reportData.sgpas[4].toFixed(2)}
+  - Semester 6: ${reportData.sgpas[5].toFixed(2)}
+  - Semester 7: ${reportData.sgpas[6].toFixed(2)}
+  - Semester 8: ${reportData.sgpas[7].toFixed(2)}
+* Expected Final CGPA: ${reportData.cgpa.toFixed(2)} / 10.00 (Divisible by 0.05)
 
 --------------------------------------------------
 PERSONALITY BLUEPRINT:
@@ -871,7 +903,7 @@ Ancient Wisdom + Modern AI.
   };
 
   const handleShare = () => {
-    const shareText = `Check out my AstroFATE Numerology Report! Core Numbers: Life Path ${reportData.lifePath}, Destiny ${reportData.destiny}, Soul Urge ${reportData.soulUrge}. Get yours at ${window.location.origin}`;
+    const shareText = `Check out my AstroFATE Numerology Report! Core Numbers: Life Path ${reportData.lifePath}, Destiny ${reportData.destiny}, Soul Urge ${reportData.soulUrge}, Expected CGPA: ${reportData.cgpa.toFixed(2)}. Get yours at ${window.location.origin}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shareText).then(() => {
         toast.success("Share text copied to clipboard!");
@@ -911,7 +943,7 @@ Ancient Wisdom + Modern AI.
             {reportItems.map((s) => (
               <div key={s.label} className="glass rounded-2xl p-5">
                 <div className="text-xs uppercase tracking-wider text-gold">{s.label}</div>
-                <p className="mt-2 text-sm">{s.value}</p>
+                <p className="mt-2 text-sm whitespace-pre-line leading-relaxed">{s.value}</p>
               </div>
             ))}
           </div>
