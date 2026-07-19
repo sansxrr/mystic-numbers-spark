@@ -4,7 +4,7 @@ import {
   Briefcase, TrendingUp, Trophy, Wallet, Target, Sprout,
   Sun, Palette, Calendar, MapPin, CalendarDays, Diamond,
   Sparkles, Lightbulb, MessageSquare, Smile, Flame, Users,
-  ChevronDown, Send, Download, Share2, Quote,
+  ChevronDown, Send, Download, Share2, Quote, Github, Instagram
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -1134,9 +1134,27 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="mt-10 border-t border-border pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-3 text-xs text-muted-foreground">
+      <div className="mt-10 border-t border-border pt-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-muted-foreground">
         <p>© {new Date().getFullYear()} AstroPredict. All rights reserved.</p>
         <p>Made with ✨ for cosmic seekers worldwide.</p>
+        <div className="flex gap-4">
+          <a 
+            href="https://github.com/sansxrr" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-foreground transition flex items-center gap-1.5"
+          >
+            <Github className="h-4 w-4" /> GitHub
+          </a>
+          <a 
+            href="https://instagram.com/sansxrr" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-foreground transition flex items-center gap-1.5"
+          >
+            <Instagram className="h-4 w-4" /> Instagram
+          </a>
+        </div>
       </div>
     </footer>
   );
