@@ -23,7 +23,7 @@ export function Hero() {
 
           <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
             Get personalized numerology insights, lucky numbers, compatibility reports,
-            career guidance, and future forecasts — powered by ancient wisdom and modern AI.
+            career guidance, expected SGPA & CGPA forecasts, and future projections — powered by ancient wisdom and modern AI.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
