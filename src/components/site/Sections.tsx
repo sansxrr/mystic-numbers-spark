@@ -818,11 +818,7 @@ export function SampleReport() {
   const reportItems = [
     { label: "Core Numbers", value: `Life Path ${reportData.lifePath} · Destiny ${reportData.destiny} · Soul Urge ${reportData.soulUrge}` },
     { label: "Lucky Insights", value: `${lpInfo.color} · ${lpInfo.day} · ${lpInfo.gem}` },
-    { 
-      label: "Academic Projection (Expected SGPA)", 
-      value: `Sem 1: ${reportData.sgpas[0].toFixed(2)}   |   Sem 2: ${reportData.sgpas[1].toFixed(2)}   |   Sem 3: ${reportData.sgpas[2].toFixed(2)}   |   Sem 4: ${reportData.sgpas[3].toFixed(2)}\nSem 5: ${reportData.sgpas[4].toFixed(2)}   |   Sem 6: ${reportData.sgpas[5].toFixed(2)}   |   Sem 7: ${reportData.sgpas[6].toFixed(2)}   |   Sem 8: ${reportData.sgpas[7].toFixed(2)}` 
-    },
-    { label: "Expected Final CGPA", value: `${reportData.cgpa.toFixed(2)} / 10.00` },
+    { label: "Expected Overall CGPA", value: `${reportData.cgpa.toFixed(2)} / 10.00` },
     { label: "Personality Blueprint", value: lpInfo.personality },
     { label: "Career & Prosperity", value: lpInfo.career },
     { label: "Relationships & Compatibility", value: lpInfo.compatibility },
@@ -854,16 +850,7 @@ LUCKY INSIGHTS:
 --------------------------------------------------
 ACADEMIC PROJECTION:
 --------------------------------------------------
-* Expected SGPAs:
-  - Semester 1: ${reportData.sgpas[0].toFixed(2)}
-  - Semester 2: ${reportData.sgpas[1].toFixed(2)}
-  - Semester 3: ${reportData.sgpas[2].toFixed(2)}
-  - Semester 4: ${reportData.sgpas[3].toFixed(2)}
-  - Semester 5: ${reportData.sgpas[4].toFixed(2)}
-  - Semester 6: ${reportData.sgpas[5].toFixed(2)}
-  - Semester 7: ${reportData.sgpas[6].toFixed(2)}
-  - Semester 8: ${reportData.sgpas[7].toFixed(2)}
-* Expected Final CGPA: ${reportData.cgpa.toFixed(2)} / 10.00 (Divisible by 0.05)
+* Expected Overall CGPA: ${reportData.cgpa.toFixed(2)} / 10.00 (Divisible by 0.05)
 
 --------------------------------------------------
 PERSONALITY BLUEPRINT:
