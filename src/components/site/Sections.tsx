@@ -9,7 +9,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import logoUrl from "../../assets/logo.png";
-import sanskarImg from "../../assets/Sanskar_image.jpg";
+import smokingCatImg from "../../assets/smoking_cat.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -341,8 +341,8 @@ export function Forecast() {
 function getBotResponse(query: string): string {
   const q = query.toLowerCase();
   
-  if (q.includes("ceo") || q.includes("sanskar") || q.includes("girawale") || q.includes("founder")) {
-    return "AstroFATE was founded by Sanskar Girawale. His vision is to bridge the gap between ancient cosmological wisdom and modern AI tools. As the CEO, Sanskar believes in using numerology as a roadmap to unlock ultimate human potential!";
+  if (q.includes("ceo") || q.includes("founder") || q.includes("chain") || q.includes("smoker") || q.includes("cat")) {
+    return "AstroFATE was founded by Chain Smoker. Their vision is to bridge the gap between ancient cosmological wisdom and modern AI tools. As the CEO, Chain Smoker believes in using numerology as a roadmap to unlock ultimate human potential!";
   }
   
   if (q.includes("astrofate") || q.includes("company") || q.includes("fate")) {
@@ -691,14 +691,14 @@ export function AboutCompany() {
                   <div className="relative mb-6">
                     <div className="absolute inset-0 bg-gradient-to-tr from-violet to-gold rounded-2xl blur-md opacity-50 group-hover:opacity-85 transition" />
                     <img 
-                      src={sanskarImg} 
-                      alt="Sanskar Girawale — CEO" 
+                      src={smokingCatImg} 
+                      alt="Chain Smoker — CEO" 
                       className="relative h-44 w-36 object-cover rounded-2xl border-2 border-gold/40 shadow-lg object-top"
                     />
                   </div>
 
                   {/* CEO Details */}
-                  <h4 className="text-xl font-bold text-foreground">Sanskar Girawale</h4>
+                  <h4 className="text-xl font-bold text-foreground">Chain Smoker</h4>
                   <p className="text-xs text-gold font-medium uppercase tracking-wider mt-1">Founder & CEO, AstroFATE</p>
                   
                   {/* CEO Quote */}

@@ -29,6 +29,13 @@ try {
       fs.copyFileSync(sanskarSrc, sanskarDest);
       console.log("Automatically copied Sanskar_image.jpg to src/assets");
     }
+
+    const catSrc = path.join(__dirname, "smoking_cat.png");
+    const catDest = path.join(destDir, "smoking_cat.png");
+    if (fs.existsSync(catSrc)) {
+      fs.copyFileSync(catSrc, catDest);
+      console.log("Automatically copied smoking_cat.png to src/assets");
+    }
   }
 } catch (err) {
   console.error("Automatic copy failed:", err);
