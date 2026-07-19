@@ -196,10 +196,36 @@ export function Career() {
 export function Compatibility() {
   const [score, setScore] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [personA, setPersonA] = useState({ name: "", dob: "" });
+  const [personB, setPersonB] = useState({ name: "", dob: "" });
 
-  const onCheck = (e: React.FormEvent) => {
+  const onCheck = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!personA.name || !personA.dob || !personB.name || !personB.dob) {
+      return;
+    }
     setLoading(true);
+
+    try {
+      await fetch("https://connect.pabbly.com/webhook-listener/webhook/IjU3NjMwNTZkMDYzNDA0MzE1MjY1NTUzYyI_3D_pc/IjU3NjcwNTY5MDYzMTA0MzU1MjZkNTUzYzUxMzci_pc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          personAName: personA.name,
+          personADob: personA.dob,
+          personBName: personB.name,
+          personBDob: personB.dob,
+          compatibilityScore: 87,
+          source: "AstroFATE Compatibility Form",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+    } catch (error) {
+      console.error("Compatibility webhook submission failed:", error);
+    }
+
     setTimeout(() => {
       setScore(87);
       setLoading(false);
@@ -216,22 +242,46 @@ export function Compatibility() {
               <div className="text-sm font-semibold text-gold">Person A</div>
               <div>
                 <Label className="mb-2 block">Name</Label>
-                <Input placeholder="e.g. Alex" className="h-11 bg-input border-border" />
+                <Input 
+                  placeholder="e.g. Alex" 
+                  value={personA.name}
+                  onChange={(e) => setPersonA({ ...personA, name: e.target.value })}
+                  required
+                  className="h-11 bg-input border-border" 
+                />
               </div>
               <div>
                 <Label className="mb-2 block">Date of Birth</Label>
-                <Input type="date" className="h-11 bg-input border-border" />
+                <Input 
+                  type="date" 
+                  value={personA.dob}
+                  onChange={(e) => setPersonA({ ...personA, dob: e.target.value })}
+                  required
+                  className="h-11 bg-input border-border" 
+                />
               </div>
             </div>
             <div className="space-y-4">
               <div className="text-sm font-semibold text-violet-soft">Person B</div>
               <div>
                 <Label className="mb-2 block">Name</Label>
-                <Input placeholder="e.g. Jamie" className="h-11 bg-input border-border" />
+                <Input 
+                  placeholder="e.g. Jamie" 
+                  value={personB.name}
+                  onChange={(e) => setPersonB({ ...personB, name: e.target.value })}
+                  required
+                  className="h-11 bg-input border-border" 
+                />
               </div>
               <div>
                 <Label className="mb-2 block">Date of Birth</Label>
-                <Input type="date" className="h-11 bg-input border-border" />
+                <Input 
+                  type="date" 
+                  value={personB.dob}
+                  onChange={(e) => setPersonB({ ...personB, dob: e.target.value })}
+                  required
+                  className="h-11 bg-input border-border" 
+                />
               </div>
             </div>
             <Button type="submit" disabled={loading} className="md:col-span-2 h-12 bg-gradient-to-r from-violet to-violet-soft text-white shadow-glow">
