@@ -18,7 +18,7 @@ export function Hero() {
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05]">
             Discover the{" "}
             <span className="text-gradient-gold">hidden power</span>{" "}
-            of your numbers & expected SGPA
+            of your numbers & expected CGPA
           </h1>
 
           <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
