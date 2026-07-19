@@ -8,12 +8,29 @@ import { toast } from "sonner";
 export function NumerologyForm() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", dob: "" });
+  const [form, setForm] = useState({ name: "", phone: "+91 ", email: "", dob: "" });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.dob) {
+    if (!form.name || !form.phone || !form.email || !form.dob) {
       toast.error("Please fill all required fields");
+      return;
+    }
+
+    const cleanPhone = form.phone.trim();
+    if (!cleanPhone.startsWith("+91")) {
+      toast.error("Phone number must start with +91");
+      return;
+    }
+    const phoneDigits = cleanPhone.replace(/\D/g, "");
+    if (phoneDigits.length !== 12) {
+      toast.error("Please enter a valid 10-digit mobile number after the +91 prefix");
+      return;
+    }
+
+    const cleanEmail = form.email.trim().toLowerCase();
+    if (!cleanEmail.endsWith("@gmail.com") || cleanEmail === "@gmail.com") {
+      toast.error("Please enter a valid Gmail address (strictly ending with @gmail.com)");
       return;
     }
     setLoading(true);
@@ -65,17 +82,25 @@ export function NumerologyForm() {
                   placeholder="Enter your full name"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  required
                   className="h-12 bg-input border-border"
                 />
               </div>
               <div>
-                <Label htmlFor="phone" className="mb-2 block">Phone Number</Label>
+                <Label htmlFor="phone" className="mb-2 block">Phone Number *</Label>
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+1 555 000 0000"
+                  placeholder="+91 98765 43210"
                   value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  onChange={(e) => {
+                    let val = e.target.value;
+                    if (!val.startsWith("+91")) {
+                      val = "+91 " + val.replace(/^\+?9?1? ?/, "");
+                    }
+                    setForm({ ...form, phone: val });
+                  }}
+                  required
                   className="h-12 bg-input border-border"
                 />
               </div>
@@ -84,9 +109,10 @@ export function NumerologyForm() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="you@gmail.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  required
                   className="h-12 bg-input border-border"
                 />
               </div>
@@ -97,6 +123,7 @@ export function NumerologyForm() {
                   type="date"
                   value={form.dob}
                   onChange={(e) => setForm({ ...form, dob: e.target.value })}
+                  required
                   className="h-12 bg-input border-border"
                 />
               </div>
