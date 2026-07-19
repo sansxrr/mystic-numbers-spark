@@ -567,7 +567,223 @@ export function Assistant() {
 }
 
 // ---------- Sample Report ----------
+// Pythagorean letter values
+const charMap: Record<string, number> = {
+  a: 1, j: 1, s: 1,
+  b: 2, k: 2, t: 2,
+  c: 3, l: 3, u: 3,
+  d: 4, m: 4, v: 4,
+  e: 5, n: 5, w: 5,
+  f: 6, o: 6, x: 6,
+  g: 7, p: 7, y: 7,
+  h: 8, q: 8, z: 8,
+  i: 9, r: 9
+};
+
+const vowelMap: Record<string, number> = { a: 1, e: 5, i: 9, o: 6, u: 3 };
+
+function reduceNumber(num: number): number {
+  let val = num;
+  while (val > 9 && val !== 11 && val !== 22 && val !== 33) {
+    val = val.toString().split("").reduce((acc, d) => acc + parseInt(d, 10), 0);
+  }
+  return val;
+}
+
+function calculateLifePath(dob: string): number {
+  if (!dob) return 7;
+  const digits = dob.replace(/\D/g, "");
+  const sum = digits.split("").reduce((acc, d) => acc + parseInt(d, 10), 0);
+  return reduceNumber(sum);
+}
+
+function calculateDestiny(name: string): number {
+  if (!name) return 3;
+  const sum = name.toLowerCase().replace(/[^a-z]/g, "").split("").reduce((acc, char) => acc + (charMap[char] || 0), 0);
+  return reduceNumber(sum);
+}
+
+function calculateSoulUrge(name: string): number {
+  if (!name) return 9;
+  const sum = name.toLowerCase().replace(/[^aeiou]/g, "").split("").reduce((acc, char) => acc + (vowelMap[char] || 0), 0);
+  return reduceNumber(sum);
+}
+
+const numerologyData: Record<number, {
+  color: string;
+  day: string;
+  gem: string;
+  personality: string;
+  career: string;
+  compatibility: string;
+  forecast: string;
+}> = {
+  1: {
+    color: "Crimson Red / Gold",
+    day: "Sunday",
+    gem: "Ruby",
+    personality: "Independent pioneer, natural leader, ambitious, and self-motivated.",
+    career: "Entrepreneurship, management, leadership, innovation, and design.",
+    compatibility: "Best matched with Life Paths 3, 5, and 9.",
+    forecast: "A year of new beginnings, fresh opportunities, and personal initiatives."
+  },
+  2: {
+    color: "Orange / Pearl White",
+    day: "Monday",
+    gem: "Moonstone",
+    personality: "Sensitive, cooperative, intuitive peacemaker, and diplomat.",
+    career: "Counseling, social work, art, mediation, and customer relations.",
+    compatibility: "Best matched with Life Paths 4, 6, and 8.",
+    forecast: "A year of building relationships, partnership growth, and patient cooperation."
+  },
+  3: {
+    color: "Yellow / Gold",
+    day: "Thursday",
+    gem: "Yellow Sapphire",
+    personality: "Highly expressive, creative, optimistic, social, and communicative.",
+    career: "Marketing, writing, performing arts, design, and entertainment.",
+    compatibility: "Best matched with Life Paths 1, 5, and 7.",
+    forecast: "A year of self-expression, creative breakthroughs, and social connections."
+  },
+  4: {
+    color: "Green / Brown",
+    day: "Wednesday",
+    gem: "Emerald",
+    personality: "Practical, hard-working, organized, disciplined, and logical builder.",
+    career: "Engineering, finance, law, construction, and systems analysis.",
+    compatibility: "Best matched with Life Paths 2, 6, and 8.",
+    forecast: "A year of hard work, laying stable foundations, and disciplined progress."
+  },
+  5: {
+    color: "Turquoise / Silver",
+    day: "Wednesday",
+    gem: "Aquamarine",
+    personality: "Adventure seeker, versatile, freedom-loving, and charismatic communicator.",
+    career: "Sales, travel, media, public relations, and freelance consulting.",
+    compatibility: "Best matched with Life Paths 1, 3, and 7.",
+    forecast: "A year of bold changes, exciting travel, and transformative freedom."
+  },
+  6: {
+    color: "Indigo / Rose Pink",
+    day: "Friday",
+    gem: "Rose Quartz",
+    personality: "Nurturing, responsible, artistic, family-oriented, and harmonious provider.",
+    career: "Healthcare, teaching, therapy, interior design, and hospitality.",
+    compatibility: "Best matched with Life Paths 2, 4, and 8.",
+    forecast: "A year of family focus, home harmony, and community responsibilities."
+  },
+  7: {
+    color: "Royal Violet / Purple",
+    day: "Thursday",
+    gem: "Amethyst",
+    personality: "Intuitive seeker, highly analytical, spiritual, independent, and philosophical.",
+    career: "Research, technology, philosophy, writing, and spiritual coaching.",
+    compatibility: "Best matched with Life Paths 3, 5, and 9.",
+    forecast: "A year of deep reflection, spiritual learning, and internal growth."
+  },
+  8: {
+    color: "Deep Blue / Dark Grey",
+    day: "Saturday",
+    gem: "Blue Sapphire",
+    personality: "Ambitious authority, business-minded, financially savvy, and strong leader.",
+    career: "Business management, investment banking, real estate, and law.",
+    compatibility: "Best matched with Life Paths 2, 4, and 6.",
+    forecast: "A year of financial expansion, business power, and rewarding success."
+  },
+  9: {
+    color: "Gold / Lavender",
+    day: "Tuesday",
+    gem: "Opal",
+    personality: "Compassionate humanitarian, artistic, generous, and wise helper.",
+    career: "Non-profit, healing arts, writing, design, and teaching.",
+    compatibility: "Best matched with Life Paths 1, 3, and 7.",
+    forecast: "A year of completion, releasing old baggage, and philanthropic focus."
+  },
+  11: {
+    color: "Silver / White",
+    day: "Monday",
+    gem: "Pearl",
+    personality: "Visionary, highly intuitive, spiritual messenger, and empathic leader.",
+    career: "Counseling, writing, public speaking, coaching, and creative leadership.",
+    compatibility: "Best matched with Life Paths 2, 6, and 9.",
+    forecast: "A year of spiritual awakening, intuitive insights, and deep connections."
+  },
+  22: {
+    color: "Gold / Emerald Green",
+    day: "Wednesday",
+    gem: "Garnet",
+    personality: "Master builder, extremely practical, visionary leader, and high organizer.",
+    career: "Large scale enterprises, engineering, global politics, and philanthropy.",
+    compatibility: "Best matched with Life Paths 4, 8, and 11.",
+    forecast: "A year of manifesting huge dreams, constructing major projects, and expansion."
+  },
+  33: {
+    color: "Royal Violet / Gold",
+    day: "Thursday",
+    gem: "Yellow Topaz",
+    personality: "Master teacher, highly compassionate, protective leader, and spiritual mentor.",
+    career: "Education, humanitarian work, medical, writing, and master level teaching.",
+    compatibility: "Best matched with Life Paths 7, 9, and 11.",
+    forecast: "A year of massive personal influence, mentoring others, and profound harmony."
+  }
+};
+
 export function SampleReport() {
+  const [reportData, setReportData] = useState({
+    name: "Sarah M.",
+    dob: "1992-03-14",
+    lifePath: 7,
+    destiny: 3,
+    soulUrge: 9
+  });
+
+  const loadReportData = () => {
+    if (typeof window !== "undefined") {
+      const storedName = localStorage.getItem("astrofate_user_name");
+      const storedDob = localStorage.getItem("astrofate_user_dob");
+      if (storedName && storedDob) {
+        setReportData({
+          name: storedName,
+          dob: storedDob,
+          lifePath: calculateLifePath(storedDob),
+          destiny: calculateDestiny(storedName),
+          soulUrge: calculateSoulUrge(storedName)
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    loadReportData();
+    window.addEventListener("astrofate_report_ready", loadReportData);
+    return () => {
+      window.removeEventListener("astrofate_report_ready", loadReportData);
+    };
+  }, []);
+
+  const lpInfo = numerologyData[reportData.lifePath] || numerologyData[7];
+
+  let dateFormatted = reportData.dob;
+  try {
+    const d = new Date(reportData.dob);
+    if (!isNaN(d.getTime())) {
+      dateFormatted = d.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+  } catch (e) {}
+
+  const reportItems = [
+    { label: "Core Numbers", value: `Life Path ${reportData.lifePath} · Destiny ${reportData.destiny} · Soul Urge ${reportData.soulUrge}` },
+    { label: "Lucky Insights", value: `${lpInfo.color} · ${lpInfo.day} · ${lpInfo.gem}` },
+    { label: "Personality Blueprint", value: lpInfo.personality },
+    { label: "Career & Prosperity", value: lpInfo.career },
+    { label: "Relationships & Compatibility", value: lpInfo.compatibility },
+    { label: "Yearly Forecast", value: lpInfo.forecast },
+  ];
+
   return (
     <section id="report" className="py-20 sm:py-28 bg-cosmic">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -576,7 +792,7 @@ export function SampleReport() {
           <div className="p-6 sm:p-10 border-b border-border flex flex-wrap items-center justify-between gap-4">
             <div>
               <div className="text-xs uppercase tracking-wider text-muted-foreground">Numerology Report</div>
-              <h3 className="text-2xl font-semibold mt-1">Sarah M. — Born March 14, 1992</h3>
+              <h3 className="text-2xl font-semibold mt-1">{reportData.name} — Born {dateFormatted}</h3>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" className="glass border-border"><Download className="h-4 w-4 mr-2" /> Download</Button>
@@ -584,14 +800,7 @@ export function SampleReport() {
             </div>
           </div>
           <div className="p-6 sm:p-10 grid md:grid-cols-2 gap-6">
-            {[
-              { label: "Core Numbers", value: "Life Path 7 · Destiny 3 · Soul 9" },
-              { label: "Lucky Insights", value: "Violet · Thursday · Amethyst" },
-              { label: "Personality", value: "Intuitive visionary with quiet authority" },
-              { label: "Career", value: "Research, design, and entrepreneurship" },
-              { label: "Relationships", value: "Best matched with Life Paths 5 & 2" },
-              { label: "Yearly Forecast", value: "A pivotal year of bold change" },
-            ].map((s) => (
+            {reportItems.map((s) => (
               <div key={s.label} className="glass rounded-2xl p-5">
                 <div className="text-xs uppercase tracking-wider text-gold">{s.label}</div>
                 <p className="mt-2 text-sm">{s.value}</p>

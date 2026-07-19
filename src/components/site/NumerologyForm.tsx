@@ -56,6 +56,13 @@ export function NumerologyForm() {
 
     setLoading(false);
     setDone(true);
+    
+    if (typeof window !== "undefined") {
+      localStorage.setItem("astrofate_user_name", form.name);
+      localStorage.setItem("astrofate_user_dob", form.dob);
+      window.dispatchEvent(new Event("astrofate_report_ready"));
+    }
+
     toast.success("Your numerology report is ready!");
   };
 
