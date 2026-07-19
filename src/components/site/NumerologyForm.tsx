@@ -9,11 +9,24 @@ export function NumerologyForm() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "+91 ", email: "", dob: "" });
+  const todayStr = new Date().toISOString().split("T")[0];
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.email || !form.dob) {
       toast.error("Please fill all required fields");
+      return;
+    }
+
+    const dobDate = new Date(form.dob);
+    const minDate = new Date("1901-01-01");
+    const today = new Date();
+    dobDate.setHours(0, 0, 0, 0);
+    minDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    if (isNaN(dobDate.getTime()) || dobDate < minDate || dobDate > today) {
+      toast.error("Please enter a valid Date of Birth between January 1, 1901 and today.");
       return;
     }
 
@@ -128,6 +141,8 @@ export function NumerologyForm() {
                 <Input
                   id="dob"
                   type="date"
+                  min="1901-01-01"
+                  max={todayStr}
                   value={form.dob}
                   onChange={(e) => setForm({ ...form, dob: e.target.value })}
                   required

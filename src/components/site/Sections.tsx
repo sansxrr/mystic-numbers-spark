@@ -12,6 +12,7 @@ import logoUrl from "../../assets/logo.png";
 import smokingCatImg from "../../assets/smoking_cat.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 // ---------- Reusable section header ----------
 function SectionHead({ eyebrow, title, subtitle }: { eyebrow: string; title: React.ReactNode; subtitle?: string }) {
@@ -198,12 +199,34 @@ export function Compatibility() {
   const [loading, setLoading] = useState(false);
   const [personA, setPersonA] = useState({ name: "", dob: "" });
   const [personB, setPersonB] = useState({ name: "", dob: "" });
+  const todayStr = new Date().toISOString().split("T")[0];
 
   const onCheck = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!personA.name || !personA.dob || !personB.name || !personB.dob) {
+      toast.error("Please fill all required fields");
       return;
     }
+
+    const minDate = new Date("1901-01-01");
+    const today = new Date();
+    minDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const dobA = new Date(personA.dob);
+    dobA.setHours(0, 0, 0, 0);
+    if (isNaN(dobA.getTime()) || dobA < minDate || dobA > today) {
+      toast.error("Please enter a valid Date of Birth for Person A (between January 1, 1901 and today)");
+      return;
+    }
+
+    const dobB = new Date(personB.dob);
+    dobB.setHours(0, 0, 0, 0);
+    if (isNaN(dobB.getTime()) || dobB < minDate || dobB > today) {
+      toast.error("Please enter a valid Date of Birth for Person B (between January 1, 1901 and today)");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -254,6 +277,8 @@ export function Compatibility() {
                 <Label className="mb-2 block">Date of Birth</Label>
                 <Input 
                   type="date" 
+                  min="1901-01-01"
+                  max={todayStr}
                   value={personA.dob}
                   onChange={(e) => setPersonA({ ...personA, dob: e.target.value })}
                   required
@@ -277,6 +302,8 @@ export function Compatibility() {
                 <Label className="mb-2 block">Date of Birth</Label>
                 <Input 
                   type="date" 
+                  min="1901-01-01"
+                  max={todayStr}
                   value={personB.dob}
                   onChange={(e) => setPersonB({ ...personB, dob: e.target.value })}
                   required
