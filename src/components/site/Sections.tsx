@@ -207,7 +207,7 @@ export function Compatibility() {
     setLoading(true);
 
     try {
-      await fetch("https://connect.pabbly.com/webhook-listener/webhook/IjU3NjMwNTZkMDYzNDA0MzE1MjY1NTUzYyI_3D_pc/IjU3NjcwNTY5MDYzMTA0MzU1MjZkNTUzYzUxMzci_pc", {
+      await fetch("https://connect.pabbly.com/webhook-listener/webhook/IjU3NjMwNTZkMDYzNDA0MzE1MjY1NTUzYyI_3D_pc/IjU3NjcwNTY5MDYzNjA0MzQ1MjZiNTUzNDUxM2Ei_pc", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
