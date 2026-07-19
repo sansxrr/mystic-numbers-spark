@@ -811,6 +811,76 @@ export function SampleReport() {
     { label: "Yearly Forecast", value: lpInfo.forecast },
   ];
 
+  const handleDownload = () => {
+    const reportText = `==================================================
+        ASTROFATE PERSONALIZED NUMEROLOGY REPORT
+==================================================
+
+Name: ${reportData.name}
+Date of Birth: ${dateFormatted}
+
+--------------------------------------------------
+CORE NUMBERS:
+--------------------------------------------------
+* Life Path Number: ${reportData.lifePath}
+* Destiny Number: ${reportData.destiny}
+* Soul Urge Number: ${reportData.soulUrge}
+
+--------------------------------------------------
+LUCKY INSIGHTS:
+--------------------------------------------------
+* Lucky Colors: ${lpInfo.color}
+* Lucky Day: ${lpInfo.day}
+* Lucky Gemstone: ${lpInfo.gem}
+
+--------------------------------------------------
+PERSONALITY BLUEPRINT:
+--------------------------------------------------
+${lpInfo.personality}
+
+--------------------------------------------------
+CAREER & PROSPERITY:
+--------------------------------------------------
+${lpInfo.career}
+
+--------------------------------------------------
+RELATIONSHIPS & COMPATIBILITY:
+--------------------------------------------------
+${lpInfo.compatibility}
+
+--------------------------------------------------
+YEARLY FORECAST:
+--------------------------------------------------
+${lpInfo.forecast}
+
+==================================================
+Thank you for using AstroFATE.
+Ancient Wisdom + Modern AI.
+==================================================`;
+
+    const blob = new Blob([reportText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `AstroFATE_${reportData.name.replace(/\s+/g, "_")}_Numerology_Report.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success("Numerology report downloaded successfully!");
+  };
+
+  const handleShare = () => {
+    const shareText = `Check out my AstroFATE Numerology Report! Core Numbers: Life Path ${reportData.lifePath}, Destiny ${reportData.destiny}, Soul Urge ${reportData.soulUrge}. Get yours at ${window.location.origin}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        toast.success("Share text copied to clipboard!");
+      }).catch(() => {
+        toast.error("Failed to copy share link");
+      });
+    }
+  };
+
   return (
     <section id="report" className="py-20 sm:py-28 bg-cosmic">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -822,8 +892,19 @@ export function SampleReport() {
               <h3 className="text-2xl font-semibold mt-1">{reportData.name} — Born {dateFormatted}</h3>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="glass border-border"><Download className="h-4 w-4 mr-2" /> Download</Button>
-              <Button className="bg-gradient-to-r from-violet to-violet-soft text-white"><Share2 className="h-4 w-4 mr-2" /> Share</Button>
+              <Button 
+                variant="outline" 
+                onClick={handleDownload} 
+                className="glass border-border"
+              >
+                <Download className="h-4 w-4 mr-2" /> Download
+              </Button>
+              <Button 
+                onClick={handleShare} 
+                className="bg-gradient-to-r from-violet to-violet-soft text-white"
+              >
+                <Share2 className="h-4 w-4 mr-2" /> Share
+              </Button>
             </div>
           </div>
           <div className="p-6 sm:p-10 grid md:grid-cols-2 gap-6">
